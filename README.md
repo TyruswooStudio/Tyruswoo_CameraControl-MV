@@ -7,17 +7,17 @@ Tyruswoo's Camera Control plugin allows greater control of the camera.
 - `CamFollow`
 
 ### A Few Notes
-- CamSet simply places the camera at a certain position, but the camera
+- `CamSet` simply places the camera at a certain position, but the camera
     will still be attempting to follow its current target (usually the
     player, by default).
-- CamFollow allows changing the camera's target.  This can be used to
+- `CamFollow` allows changing the camera's target.  This can be used to
     make the camera follow a certain event's perspective.  Or, the
     camera can be set to follow the map (i.e. a fixed perspective).
 - These plugin commands can be used in combination with the "Scroll Map..."
   event command, found on Event Commands tab 2, under the Movement section.
 
 ### Plugin Command Usage
-(Replace x and y with coordinates, and replace ID with an event's ID number.)
+(Replace `x` and `y` with coordinates, and replace `ID` with an event's ID number.)
 
 ```
  CamSet x y           Sets the camera's position to x and y,
@@ -57,16 +57,16 @@ Tyruswoo's Camera Control plugin allows greater control of the camera.
                       - Can also be used in combination with the "Scroll
                         Map..." event command, allowing for diagonal panning
                         of the camera.
+```
 
 ##Version History
 
-v1.0:
+**v1.0**:
 - Plugin released.
 
-v1.1:  2/1/2020
+**v1.1**:  2/1/2020
 - Fixed a bug that resulted in an event's speed increasing when targeted
        by the CamFollow Event plugin command.
 
-v1.1.1:  9/2/2023
+**v1.1.1**:  9/2/2023
 - This plugin is now free and open source under the MIT license.
-```
