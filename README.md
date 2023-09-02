@@ -59,14 +59,14 @@ Tyruswoo's Camera Control plugin allows greater control of the camera.
                         of the camera.
 ```
 
-##Version History
+## Version History
 
-**v1.0**:
+**v1.0**
 - Plugin released.
 
-**v1.1**:  2/1/2020
+**v1.1** - 2/1/2020
 - Fixed a bug that resulted in an event's speed increasing when targeted
        by the CamFollow Event plugin command.
 
-**v1.1.1**:  9/2/2023
+**v1.1.1** - 9/2/2023
 - This plugin is now free and open source under the MIT license.
