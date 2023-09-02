@@ -59,6 +59,8 @@ Tyruswoo's Camera Control plugin allows greater control of the camera.
                         of the camera.
 ```
 
+### For more help using the Screenshot Snapper plugin, see [Tyruswoo.com](https://www.tyruswoo.com).
+
 ## Version History
 
 **v1.0**
