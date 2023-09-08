@@ -35,15 +35,17 @@ var Tyruswoo = Tyruswoo || {};
 Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
 
 /*:
- * @plugindesc v1.1.1  Allows greater control of the camera.
+ * @plugindesc v1.0.1  Allows greater control of the camera.
  * @author Tyruswoo
  *
  * @help
  * Camera Control
  * by Tyruswoo
- * Last Update:  1 Feb. 2020
- * ===========================================================================
- * Follow me for more RPG Maker MV content and tutorials!
+ * Last Update:  19 Nov. 2015
+ * 
+ * WARNING: This is an older version! It lacks features and improvements
+ * present in the latest version. You can get the latest version for free
+ * on Tyruswoo.com.
  * ===========================================================================
  * Tyruswoo's Camera Control plugin allows greater control of the camera.
  *
@@ -103,19 +105,6 @@ Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
  *                         Map..." event command, allowing for diagonal panning
  *                         of the camera.
  * ============================================================================
- * Version History:
- * 
- * v1.0:
- *   - Plugin released.
- *
- * v1.1:  2/1/2020
- *   - Fixed a bug that resulted in an event's speed increasing when targeted
- *        by the CamFollow Event plugin command.
- * 
- * v1.1.1:  9/2/2023
- *   - This plugin is now free and open source under the MIT license.
- * 
- * ============================================================================
  * MIT License
  *
  * Copyright (c) 2023 Kathy Bunn and Scott Tyrus Washburn
@@ -137,14 +126,13 @@ Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- * ============================================================================
  */
 
 //=============================================================================
 // Game_Map
 //=============================================================================
 
-// Alias method
+//Alias method
 Tyruswoo.CameraControl.Game_Map_initialize = Game_Map.prototype.initialize;
 Game_Map.prototype.initialize = function(mapId) {
 	Tyruswoo.CameraControl.Game_Map_initialize.call(this, mapId);
@@ -156,8 +144,13 @@ Game_Map.prototype.initialize = function(mapId) {
 // Game_Player
 //=============================================================================
 
-// Replacement method
+//Replacement method
 Game_Player.prototype.update = function(sceneActive) {
+	var eventID = $gameMap._camFollowEventID;
+	if (eventID > 0 && typeof $gameMap._events[eventID] != 'undefined') {
+		var eventLastScrolledX = $gameMap._events[eventID].scrolledX();
+		var eventLastScrolledY = $gameMap._events[eventID].scrolledY();
+	}
     var lastScrolledX = this.scrolledX();
     var lastScrolledY = this.scrolledY();
     var wasMoving = this.isMoving();
@@ -166,17 +159,19 @@ Game_Player.prototype.update = function(sceneActive) {
         this.moveByInput();
     }
     Game_Character.prototype.update.call(this);
+	if (eventID > 0 && typeof $gameMap._events[eventID] != 'undefined') {
+		$gameMap._events[eventID].update();
+	}
 	switch ($gameMap._camFollow) {
+		case 'player':
+			this.updateScroll(lastScrolledX, lastScrolledY);
+			break;
 		case 'event':
-			var eventID = $gameMap._camFollowEventID;
-			var event = $gameMap._events[eventID];
-			if (eventID > 0 && typeof event != 'undefined') {
-				$gamePlayer.center(event._realX, event._realY); // Make sure the camera stays centered on this event, regardless of its position.
-			};
+			$gameMap._events[eventID].updateScroll(eventLastScrolledX, eventLastScrolledY);
 			break;
 		case 'map':
 			break;
-		default: // Includes when $gameMap._camFollow == player
+		default:
 			this.updateScroll(lastScrolledX, lastScrolledY);
 	}
     this.updateVehicle();
@@ -187,10 +182,44 @@ Game_Player.prototype.update = function(sceneActive) {
 };
 
 //=============================================================================
+// Game_Event
+//=============================================================================
+
+//New method
+Game_Event.prototype.centerX = function() {
+    return (Graphics.width / $gameMap.tileWidth() - 1) / 2.0;
+};
+
+//New method
+Game_Event.prototype.centerY = function() {
+    return (Graphics.height / $gameMap.tileHeight() - 1) / 2.0;
+};
+
+//New method
+Game_Event.prototype.updateScroll = function(lastScrolledX, lastScrolledY) {
+    var x1 = lastScrolledX;
+    var y1 = lastScrolledY;
+    var x2 = this.scrolledX();
+    var y2 = this.scrolledY();
+    if (y2 > y1 && y2 > this.centerY()) {
+        $gameMap.scrollDown((y2 - y1) * 2);
+    }
+    if (x2 < x1 && x2 < this.centerX()) {
+        $gameMap.scrollLeft((x1 - x2) * 2);
+    }
+    if (x2 > x1 && x2 > this.centerX()) {
+        $gameMap.scrollRight((x2 - x1) * 2);
+    }
+    if (y2 < y1 && y2 < this.centerY()) {
+        $gameMap.scrollUp((y1 - y2) * 2);
+    }
+};
+
+//=============================================================================
 // Game_Interpreter
 //=============================================================================
 
-// Alias method
+//Alias method
 Tyruswoo.CameraControl.Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
 Game_Interpreter.prototype.pluginCommand = function(command, args) {
     Tyruswoo.CameraControl.Game_Interpreter_pluginCommand.call(this, command, args);

@@ -1,4 +1,9 @@
-# Tyruswoo Camera Control for RPG Maker MV
+## WARNING: This is an older version!
+It lacks the features and improvements of this plugin's later versions.
+To get the latest version for free, visit
+[Tyruswoo.com](https://www.tyruswoo.com).
+
+# Tyruswoo Camera Control v1.0.1 for RPG Maker MV
 
 Tyruswoo's Camera Control plugin allows greater control of the camera.
 
@@ -58,12 +63,8 @@ If the event is invisible, then it can look like the camera is simply panning ac
 
 ## Version History
 
-**v1.0**
+**v1.0** - 9/22/2019
 - Plugin released.
 
-**v1.1** - 2/1/2020
-- Fixed a bug that resulted in an event's speed increasing when targeted
-       by the CamFollow Event plugin command.
-
-**v1.1.1** - 9/2/2023
+**v1.0.1** - 9/7/2023
 - This plugin is now free and open source under the MIT license.
