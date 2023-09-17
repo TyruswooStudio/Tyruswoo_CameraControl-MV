@@ -35,13 +35,11 @@ var Tyruswoo = Tyruswoo || {};
 Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
 
 /*:
- * @plugindesc v1.0.1  Allows greater control of the camera.
+ * @plugindesc MV v1.0.1  Allows greater control of the camera.
  * @author Tyruswoo
  *
  * @help
- * Camera Control
- * by Tyruswoo
- * Last Update:  19 Nov. 2015
+ * Tyruswoo Camera Control for RPG Maker MV
  * 
  * WARNING: This is an older version! It lacks features and improvements
  * present in the latest version. You can get the latest version for free
