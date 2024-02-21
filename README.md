@@ -67,3 +67,7 @@ If the event is invisible, then it can look like the camera is simply panning ac
 
 **v1.1.1** - 9/2/2023
 - This plugin is now free and open source under the MIT license.
+
+**v1.1.2** - 2/21/2024
+- Fixed a compatibility issue with other plugins that alter Game_Player's
+  update function.

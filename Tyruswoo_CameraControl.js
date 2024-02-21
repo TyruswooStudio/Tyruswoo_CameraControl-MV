@@ -35,7 +35,7 @@ var Tyruswoo = Tyruswoo || {};
 Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
 
 /*:
- * @plugindesc MV v1.1.1  Allows greater control of the camera.
+ * @plugindesc MV v1.1.2  Allows greater control of the camera.
  * @author Tyruswoo
  *
  * @help
@@ -109,6 +109,10 @@ Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
  * 
  * v1.1.1:  9/2/2023
  *   - This plugin is now free and open source under the MIT license.
+ *
+ * v1.1.2:  2/21/2024
+ *   - Fixed a compatibility issue with other plugins that alter Game_Player's
+ *     update function.
  * 
  * ============================================================================
  * MIT License
@@ -151,34 +155,25 @@ Game_Map.prototype.initialize = function(mapId) {
 // Game_Player
 //=============================================================================
 
-// Replacement method
-Game_Player.prototype.update = function(sceneActive) {
-    var lastScrolledX = this.scrolledX();
-    var lastScrolledY = this.scrolledY();
-    var wasMoving = this.isMoving();
-    this.updateDashing();
-    if (sceneActive) {
-        this.moveByInput();
-    }
-    Game_Character.prototype.update.call(this);
-	switch ($gameMap._camFollow) {
-		case 'event':
-			var eventID = $gameMap._camFollowEventID;
-			var event = $gameMap._events[eventID];
-			if (eventID > 0 && typeof event != 'undefined') {
-				$gamePlayer.center(event._realX, event._realY); // Make sure the camera stays centered on this event, regardless of its position.
-			};
-			break;
-		case 'map':
-			break;
-		default: // Includes when $gameMap._camFollow == player
-			this.updateScroll(lastScrolledX, lastScrolledY);
+// Alias method
+Tyruswoo.CameraControl.Game_Player_updateScroll =
+	Game_Player.prototype.updateScroll;
+Game_Player.prototype.updateScroll = function(lastScrolledX, lastScrolledY) {
+	var camFollow = $gameMap._camFollow;
+	if ('map' == camFollow) {
+		return; // Don't scroll.
+	} else if ('event' == camFollow) {
+		var eventID = $gameMap._camFollowEventID;
+		var event = $gameMap._events[eventID];
+		if (eventID > 0 && event !== undefined) {
+			// Center camera on this event, regardless of its position.
+			$gamePlayer.center(event._realX, event._realY);
+		}
+		return;
 	}
-    this.updateVehicle();
-    if (!this.isMoving()) {
-        this.updateNonmoving(wasMoving);
-    }
-    this._followers.update();
+	// Otherwise, scroll with the player.
+	Tyruswoo.CameraControl.Game_Player_updateScroll.call(this,
+		lastScrolledX, lastScrolledY);
 };
 
 //=============================================================================
