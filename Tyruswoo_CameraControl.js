@@ -98,6 +98,8 @@ Tyruswoo.CameraControl = Tyruswoo.CameraControl || {};
  *                         Map..." event command, allowing for diagonal panning
  *                         of the camera.
  * ============================================================================
+ * Visit Tyruswoo.com to ask for help, donate, or browse more of our plugins.
+ * ============================================================================
  * Version History:
  * 
  * v1.0:
