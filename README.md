@@ -54,7 +54,7 @@ If the event is invisible, then it can look like the camera is simply panning ac
   Map..." event command, allowing for diagonal panning
   of the camera.
 
-### For more help using the Screenshot Snapper plugin, see [Tyruswoo.com](https://www.tyruswoo.com).
+### Visit [**Tyruswoo.com**](https://www.tyruswoo.com) to [ask for help](https://www.tyruswoo.com/contact-us/), [donate](https://www.tyruswoo.com/donate/), or browse more of our [plugins](https://www.tyruswoo.com/downloads/rpg-maker-plugin-downloads/).
 
 ## Version History
 
