@@ -54,6 +54,54 @@ If the event is invisible, then it can look like the camera is simply panning ac
   Map..." event command, allowing for diagonal panning
   of the camera.
 
+### Scripting Functions
+
+Camera Control comes with functions that can be called inside scripts.
+These functions correspond to the plugin commands described above.
+
+Replace x and y with coordinates, and replace id with an event's ID number.
+The scripting functions are written as shown below:
+
+```js
+// Camera setting functions
+Tyruswoo.CameraControl.setOnCoords(x, y);
+Tyruswoo.CameraControl.setOnPlayer();
+Tyruswoo.CameraControl.setOnEvent(id);
+
+// Camera following functions
+Tyruswoo.CameraControl.followCoords(x, y);
+Tyruswoo.CameraControl.followMap();
+Tyruswoo.CameraControl.followPlayer();
+Tyruswoo.CameraControl.followEvent(id);
+```
+
+### Debugging Camera Control Commands
+
+To see output from Camera Control (and any other plugins that might log to
+the console), press the F12 key while in game to open the console.
+When you run a Camera Control plugin command or script function, the action
+it takes will be logged to the console.
+
+For example, if the plugin command `CamFollow player` runs, and the player
+is at the coordinates (44, 12), the console logs the following:
+
+```
+CamFollow: Camera now following player's position: x = 44 , y = 12
+```
+
+The log message will tell whether the command's point of reference is the
+player, an event, the map, or coordinates.
+
+Now suppose the plugin command `CamSet Foo` runs. This is not expected usage
+so the console shows the following warning:
+
+```
+Ignoring unrecognized CamSet command: CamSet Foo
+```
+
+So if Camera Control ever isn't behaving as you expect, you can check the
+console for clues to what happened.
+
 ### Visit [**Tyruswoo.com**](https://www.tyruswoo.com) to [ask for help](https://www.tyruswoo.com/contact-us/), [donate](https://www.tyruswoo.com/donate/), or browse more of our [plugins](https://www.tyruswoo.com/downloads/rpg-maker-plugin-downloads/).
 
 ## Version History
@@ -71,3 +119,7 @@ If the event is invisible, then it can look like the camera is simply panning ac
 **v1.1.2** - 2/21/2024
 - Fixed a compatibility issue with other plugins that alter Game_Player's
   update function.
+
+**v1.2.0** - 4/9/2026
+- Improved tolerance for spelling and syntax variations.
+- Added static functions for use in scripting.
